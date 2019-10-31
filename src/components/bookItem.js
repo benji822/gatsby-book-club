@@ -10,6 +10,10 @@ const BookItemWrapper = styled.section`
   padding: 20px;
   display: flex;
 
+  @media (max-width: 650px) {
+    flex-direction: column;
+  }
+
   small {
     font-size: 14px;
     font-weight: normal;
@@ -18,6 +22,10 @@ const BookItemWrapper = styled.section`
 
 const BookItemImageWrapper = styled.div`
   max-width: 200px;
+
+  @media (max-width: 650px) {
+    align-self: center;
+  }
 
   img {
     max-width: 200px;

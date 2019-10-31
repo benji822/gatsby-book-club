@@ -9,10 +9,20 @@ const CommentForm = styled.form`
   margin-top: 32px;
   align-items: center;
 
+  @media (max-width: 650px) {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
   ${Input} {
     margin-right: 10px;
     margin-bottom: auto;
     margin-top: auto;
+
+    @media (max-width: 650px) {
+      margin-bottom: 15px;
+      margin-right: 0;
+    }
   }
 
   ${Button} {

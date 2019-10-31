@@ -46,6 +46,7 @@ class Firebase {
     return this.db
       .collection("comments")
       .where("book", "==", bookRef)
+      .orderBy("dateCreated", "desc")
       .onSnapshot(onSnapshot)
   }
 

@@ -9,6 +9,7 @@ export const Button = styled.button`
   text-decoration: none;
   outline: none;
   cursor: pointer;
+  white-space: nowrap;
 
   ${props => (props.block ? "display: block; width: 100%;" : "")}
 

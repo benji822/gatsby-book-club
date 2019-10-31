@@ -58,10 +58,11 @@ export const BookComments = ({ firebase, bookId }) => {
             id: doc.id,
             ...doc.data(),
           })
-          setComments(snapshotComments)
         })
+        setComments(snapshotComments)
       },
     })
+
     return () => {
       if (unsubscribe) {
         unsubscribe()
@@ -71,11 +72,11 @@ export const BookComments = ({ firebase, bookId }) => {
 
   const handlePostCommentSubmit = e => {
     e.preventDefault()
-    console.log(commentText)
     firebase.postComment({
       text: commentText,
       bookId,
     })
+    setCommentText("")
   }
 
   return (

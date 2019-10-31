@@ -20,18 +20,25 @@ class Firebase {
       .get()
   }
 
-  async register({ email, password, name }) {
+  async register({ email, password, username }) {
     const newUser = await this.auth.createUserWithEmailAndPassword(
       email,
       password
     )
     return this.db
       .collection("publicProfiles")
-      .doc(newUser.user.uid)
+      .doc(username)
       .set({
         userId: newUser.user.uid,
-        name: name,
       })
+  }
+
+  async postComment({ text, bookId }) {
+    const postCommentCallable = this.functions.httpsCallable("postComment")
+    return postCommentCallable({
+      text,
+      bookId,
+    })
   }
 
   subscribeToBookComments({ bookId, onSnapshot }) {

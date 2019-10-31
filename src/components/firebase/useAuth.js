@@ -20,12 +20,9 @@ function useAuth() {
           firebaseInstance
             .getUserProfile({ userId: userResult.uid })
             .then(profile => {
-              profile.forEach(doc => {
-                const userData = doc.data()
-                setUser({
-                  ...userResult,
-                  username: profile.empty ? null : userData.name,
-                })
+              setUser({
+                ...userResult,
+                username: profile.empty ? null : profile.docs[0].id,
               })
             })
           setUser(userResult)

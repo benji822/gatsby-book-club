@@ -46,6 +46,7 @@ const CommentListItem = styled.div`
 
 export const BookComments = ({ firebase, bookId }) => {
   const [comments, setComments] = useState([])
+  const [commentText, setCommentText] = useState("")
 
   useEffect(() => {
     const unsubscribe = firebase.subscribeToBookComments({
@@ -68,11 +69,27 @@ export const BookComments = ({ firebase, bookId }) => {
     }
   }, [])
 
+  const handlePostCommentSubmit = e => {
+    e.preventDefault()
+    console.log(commentText)
+    firebase.postComment({
+      text: commentText,
+      bookId,
+    })
+  }
+
   return (
     <div>
-      <CommentForm>
-        <Input />
-        <Button>Post comment</Button>
+      <CommentForm onSubmit={handlePostCommentSubmit}>
+        <Input
+          type="text"
+          onChange={e => {
+            e.persist()
+            setCommentText(e.target.value)
+          }}
+          value={commentText}
+        />
+        <Button type="submit">Post comment</Button>
       </CommentForm>
       {comments.map(comment => (
         <CommentListItem key={comment.id}>

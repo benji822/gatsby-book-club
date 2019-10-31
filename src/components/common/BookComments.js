@@ -93,7 +93,7 @@ export const BookComments = ({ firebase, bookId }) => {
       </CommentForm>
       {comments.map(comment => (
         <CommentListItem key={comment.id}>
-          <strong>{comment.name}</strong>
+          <strong>{comment.username}</strong>
           <p>{comment.text}</p>
         </CommentListItem>
       ))}

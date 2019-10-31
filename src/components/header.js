@@ -16,9 +16,18 @@ const HeaderContent = styled.div`
   padding: 1.45rem 1.0875rem;
   display: flex;
 
+  @media (max-width: 650px) {
+    flex-wrap: wrap;
+  }
+
   > h1 {
     margin: 0;
     flex-grow: 1;
+    padding-right: 40px;
+
+    @media (max-width: 540px) {
+      margin-bottom: 15px;
+    }
 
     > a {
       color: #fff;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
+import moment from "moment"
 
 import { Button } from "./Button"
 import { Input } from "./Input"
@@ -94,7 +95,12 @@ export const BookComments = ({ firebase, bookId }) => {
       </CommentForm>
       {comments.map(comment => (
         <CommentListItem key={comment.id}>
-          <strong>{comment.username}</strong>
+          <strong>
+            {comment.username} -{" "}
+            <small>
+              {moment(comment.dateCreated.toDate()).format("HH:mm Do MMM YYYY")}
+            </small>
+          </strong>
           <p>{comment.text}</p>
         </CommentListItem>
       ))}

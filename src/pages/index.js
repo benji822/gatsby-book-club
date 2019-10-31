@@ -1,21 +1,70 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
+import styled from "styled-components"
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+import BookItem from "../components/bookItem"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+const LinkButton = styled.div`
+  text-align: right;
+
+  a {
+    background: rebeccapurple;
+    color: #fff;
+    padding: 10px 20px;
+    display: inline-block;
+    border-radius: 8px;
+    text-decoration: none;
+
+    &:hover {
+      background: indigo;
+    }
+  }
+`
+
+export const query = graphql`
+  query AllBookQuery {
+    allBook {
+      edges {
+        node {
+          id
+          summary
+          title
+          localImage {
+            childImageSharp {
+              fixed(width: 200) {
+                ...GatsbyImageSharpFixed
+              }
+            }
+          }
+          author {
+            name
+          }
+        }
+      }
+    }
+  }
+`
+
+const IndexPage = ({ data }) => {
+  return (
+    <section>
+      {data.allBook.edges.map(book => {
+        return (
+          <BookItem
+            key={book.node.id}
+            bookTile={book.node.title}
+            bookSummary={book.node.summary}
+            bookAuthor={book.node.author.name}
+            bookCover={book.node.localImage.childImageSharp.fixed}
+          >
+            <LinkButton>
+              <Link to={`/book/${book.node.id}`}>Join conversation</Link>
+            </LinkButton>
+          </BookItem>
+        )
+      })}
+    </section>
+  )
+}
 
 export default IndexPage

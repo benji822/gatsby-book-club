@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { navigate } from "gatsby"
 import { FirebaseContext } from "../components/firebase"
 
@@ -8,6 +8,13 @@ const Login = props => {
   const [formValues, setFormValues] = useState({ email: "", password: "" })
   const [errorMessage, setErrorMessage] = useState("")
   const { firebase } = useContext(FirebaseContext)
+  let isMounted = true
+
+  useEffect(() => {
+    return () => {
+      isMounted = false
+    }
+  })
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -16,7 +23,9 @@ const Login = props => {
       .login({ email: formValues.email, password: formValues.password })
       .then(() => navigate("/"))
       .catch(error => {
-        setErrorMessage(error.message)
+        if (isMounted) {
+          setErrorMessage(error.message)
+        }
       })
   }
 

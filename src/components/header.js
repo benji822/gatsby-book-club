@@ -85,7 +85,6 @@ const AdminLink = styled(Link)`
 
 const Header = ({ siteTitle }) => {
   const { firebase, user } = useContext(FirebaseContext)
-  console.log(user)
 
   const handleLogoutClick = () => {
     firebase.logout().then(() => navigate("/login"))

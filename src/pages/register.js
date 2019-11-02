@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { FirebaseContext } from "../components/firebase"
 
 import { Button, Input, Form, ErrorMessage } from "../components/common"
@@ -14,6 +14,14 @@ const Register = () => {
     confirmPassword: "",
   })
 
+  let isMounted = true
+
+  useEffect(() => {
+    return () => {
+      isMounted = false
+    }
+  })
+
   const handleSubmit = e => {
     e.preventDefault()
 
@@ -25,7 +33,9 @@ const Register = () => {
           password: formValues.password,
         })
         .catch(error => {
-          setErrorMessage(error.message)
+          if (isMounted) {
+            setErrorMessage(error.message)
+          }
         })
     } else {
       setErrorMessage("Password and Comfirm Password must be match!")

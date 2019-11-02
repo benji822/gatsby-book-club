@@ -1,5 +1,5 @@
 import firebaseConfig from "./config"
-import axios from "axios"
+// import axios from "axios"
 
 class Firebase {
   constructor(app) {
@@ -18,6 +18,20 @@ class Firebase {
       .collection("publicProfiles")
       .where("userId", "==", userId)
       .onSnapshot(onSnapshot)
+  }
+
+  async createAuthor({ authorName }) {
+    const createAuthorCallable = this.functions.httpsCallable("createAuthor")
+    return createAuthorCallable({ authorName })
+  }
+
+  async getAuthors() {
+    return this.db.collection("authors").get()
+  }
+
+  async createBook({ bookName, authorId, bookCover, summary }) {
+    const createBookCallable = this.functions.httpsCallable("createBook")
+    return createBookCallable({ bookName, authorId, bookCover, summary })
   }
 
   async register({ email, password, username }) {
